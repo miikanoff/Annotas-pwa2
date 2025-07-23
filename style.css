@@ -1,0 +1,381 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/* Resetea márgenes, paddings y define box-sizing para todos los elementos */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Variables CSS globales para colores y estilos */
+:root {
+  --brand-color: #314ecf; /* color principal de la marca */
+  --base-color: #f2f4f8; /* color base para fondo */
+  --surface-color: #fff; /* color de superficies, como tarjetas */
+  --text-color: #191b23; /* color principal del texto */
+  --secondary-text-color: #3c404f; /* color secundario para textos */
+  --base-transparent-90: rgba(247, 247, 247, 0.9); /* blanco semitransparente */
+  --base-transparent-100: rgba(247, 247, 247, 1); /* blanco opaco */
+}
+
+/* Variables para el tema oscuro, redefinen colores */
+.dark-theme {
+  --brand-color: #314ecf;
+  --base-color: #1e1f26; /* fondo oscuro */
+  --surface-color: #2c2f38; /* superficie oscura */
+  --text-color: #f0f0f0; /* texto claro */
+  --secondary-text-color: #b0b3c0; /* texto secundario claro */
+  --base-transparent-90: rgba(30, 31, 38, 0.9); /* fondo oscuro semitransparente */
+  --base-transparent-100: rgba(30, 31, 38, 1); /* fondo oscuro opaco */
+}
+
+/* Estilos generales del body */
+body {
+  font-family: Poppins, sans-serif; /* fuente importada */
+  margin: 2rem; /* margen alrededor del contenido */
+  background: var(--base-color); /* color de fondo basado en variable */
+  color: var(--text-color); /* color del texto */
+}
+
+/* Margen inferior para títulos h1 */
+h1 {
+  margin-bottom: 1rem;
+}
+
+/* Hereda fuente en botones, inputs y textareas */
+button, input, textarea {
+  font: inherit;
+}
+
+/* Header con flexbox para separar elementos horizontalmente */
+header {
+  display: flex;
+  justify-content: space-between; /* separa a los extremos */
+  align-items: center; /* centra verticalmente */
+  margin-bottom: 2rem;
+  gap: 8px;
+}
+
+header > div {
+  display: flex;
+  align-items: center;
+}
+
+
+/* Botón para agregar nota */
+.add-note-btn {
+  background: var(--brand-color);
+  color: white;
+  border: none;
+  padding: 6px; /* espacio interno */
+  border-radius: 0.5rem; /* bordes redondeados */
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease; /* transición suave para hover */
+}
+
+/* Cambia color de fondo al pasar el ratón */
+.add-note-btn:hover {
+  background: #2b5866;
+}
+
+/* Botón para alternar tema */
+.theme-toggle-btn {
+  background: var(--surface-color);
+  color: var(--text-color);
+  border: 1px solid var(--surface-color);
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  margin-left: 1rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+/* Cambia fondo y texto al pasar el ratón */
+.theme-toggle-btn:hover {
+  background: var(--brand-color);
+  color: white;
+}
+
+/* Contenedor con grid para las notas */
+.notes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* columnas responsivas */
+  gap: 1.5rem; /* espacio entre elementos */
+  padding: 16px;
+}
+
+/* Estilo de cada tarjeta de nota */
+.note-card {
+  background: var(--surface-color);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  border: 1px solid var(--surface-color);
+  transition: all 0.2s ease;
+  position: relative; /* para posicionar acciones dentro */
+}
+
+/* Efecto al pasar el ratón: agranda y sombra */
+.note-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* Título de nota */
+.note-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: var(--text-color);
+  word-wrap: break-word; /* evita desbordes */
+}
+
+/* Contenido de la nota */
+.note-content {
+  color: var(--secondary-text-color);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  word-wrap: break-word;
+  white-space: pre-wrap; /* conserva saltos de línea */
+}
+
+/* Contenedor para botones de editar y borrar */
+.note-actions {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  opacity: 0; /* oculto por defecto */
+  visibility: hidden;
+  transition: all 0.2s ease;
+}
+
+/* Muestra botones al pasar el ratón por la tarjeta */
+.note-card:hover .note-actions {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Botones de editar y borrar */
+.edit-btn, .delete-btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(10px); /* fondo difuminado */
+  background: var(--base-transparent-90);
+  color: var(--text-color);
+  border: 1px solid var(--surface-color);
+}
+
+/* Hover en botón de editar */
+.edit-btn:hover {
+  background: var(--base-transparent-100);
+  transform: scale(1.05);
+}
+
+/* Hover en botón de borrar */
+.delete-btn:hover {
+  background: #ff5252;
+  transform: scale(1.05);
+  color: white;
+}
+
+/* Estilo para el diálogo modal */
+dialog {
+  margin: auto;
+  inset: 0;
+  border: none;
+  border-radius: 1rem;
+  padding: 0;
+  background: var(--surface-color);
+  color: var(--text-color);
+  max-width: 500px;
+  width: 90vw;
+}
+
+/* Fondo oscuro y desenfoque para el backdrop del diálogo */
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4px);
+}
+
+/* Contenido interno del diálogo */
+.dialog-content {
+  padding: 2rem;
+}
+
+/* Header del diálogo con flexbox */
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+/* Título dentro del diálogo */
+.dialog-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+/* Botón cerrar diálogo */
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--secondary-text-color);
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  transition: background 0.2s ease;
+}
+
+/* Hover botón cerrar */
+.close-btn:hover {
+  background: var(--surface-color);
+}
+
+/* Grupos de formulario */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+/* Etiquetas de formulario */
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+/* Inputs y textarea del formulario */
+.form-input, .form-textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid var(--surface-color);
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+  background: var(--base-color);
+  color: var(--text-color);
+}
+
+/* Cambio al enfocar input o textarea */
+.form-input:focus, .form-textarea:focus {
+  outline: none;
+  border-color: var(--brand-color);
+}
+
+/* Textarea con altura mínima y resize vertical */
+.form-textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+/* Contenedor para botones en diálogo */
+.dialog-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+/* Botones cancelar y guardar */
+.cancel-btn, .save-btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+/* Estilo botón cancelar */
+.cancel-btn {
+  background: var(--base-color);
+  color: var(--text-color);
+}
+
+/* Estilo botón guardar */
+.save-btn {
+  background: var(--brand-color);
+  color: rgb(255, 255, 255);
+}
+
+/* Hover botón guardar */
+.save-btn:hover {
+  background: #2b5866;
+}
+
+/* Estado vacío cuando no hay notas */
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--secondary-text-color);
+}
+
+.empty-state .add-note-btn {
+  background: #314ecf;
+  color: #e4e5ec; /* texto oscuro para contraste */
+  border: 1px solid #ccc;
+}
+
+.empty-state .add-note-btn:hover {
+  background: #2b5866;
+}
+
+/* Título de estado vacío */
+.empty-state h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+/* Texto descriptivo del estado vacío */
+.empty-state p {
+  font-size: 1rem;
+  margin-bottom: 2rem;
+}
+
+#addNoteImg {
+  display: block;
+  margin: 0 auto;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  filter: invert(1);
+}
+
+#addNoteImg:hover {
+  transform: scale(1.1);
+}
+
+.theme-toggle-btn {
+  font-size: 22px;
+  line-height: 22px;
+  user-select: none;
+}
+
+.note-content {
+  display: -webkit-box;          /* activa el modo caja flexible para webkit */
+  -webkit-line-clamp: 3;         /* muestra máximo 3 líneas */
+  -webkit-box-orient: vertical;  /* orientación vertical */
+  overflow: hidden;              /* oculta texto sobrante */
+  text-overflow: ellipsis;       /* añade puntos suspensivos */
+  white-space: normal;           /* permite saltos de línea */
+}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#314ecf">
+
+  <title>Annotas</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+
+  <header>
+    <h1>Annotas</h1>
+    <div>
+      <!-- Botón con imagen como reemplazo del botón de texto -->
+      <button id="addNoteBtn" class="add-note-btn" onclick="openNoteDialog()" aria-label="Añadir nueva nota">
+        <img src="img/notes.png" alt="Añadir nueva nota" id="addNoteImg">
+      </button>
+      <button id="themeToggleBtn" class="theme-toggle-btn">😎</button>
+    </div>
+  </header>
+
+  <main id="notesContainer" class="notes-grid">
+
+  </main>
+
+  <dialog id="noteDialog">
+    <div class="dialog-content">
+      <div class="dialog-header">
+        <h2 class="dialog-title" id="dialogTitle">Añadir Nueva Nota</h2>
+        <button class="close-btn" onclick="closeNoteDialog()">x</button>
+      </div>
+
+      <form id="noteForm">
+        <div class="form-group">
+          <label for="noteTitle" class="form-label">Título</label>
+          <input type="text" id="noteTitle" class="form-input" placeholder="Añade el título de la nota..." required>
+        </div>
+        
+        <div class="form-group">
+          <label for="noteContent" class="form-label">Contenido</label>
+          <textarea id="noteContent" class="form-textarea" placeholder="Escribe tu nota aquí..." required></textarea>
+        </div>
+
+        <div class="dialog-actions">
+          <button type="button" class="cancel-btn" onclick="closeNoteDialog()">Cancelar</button>
+          <button type="submit" class="save-btn">Guardar Nota</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+</body>
+</html>

@@ -1,0 +1,39 @@
+{
+  "name": "Annotas",
+  "short_name": "Annotas",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f8f6f2",
+  "theme_color": "#314ecf",
+  "description": "Aplicación creada para Jacobo Alonso Sánchez",
+  "icons": [
+    {
+      "src": "img/icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "img/launcher.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "img/ss1.png",
+      "sizes": "1170x2532",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "img/ss2.png",
+      "sizes": "1170x2532",
+      "type": "image/png"
+    },
+    {
+      "src": "img/ss3.png",
+      "sizes": "1170x2532",
+      "type": "image/png"
+    }
+  ]
+}
