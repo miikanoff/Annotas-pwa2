@@ -32,10 +32,22 @@
 /* Estilos generales del body */
 body {
   font-family: Poppins, sans-serif; /* fuente importada */
-  margin: 2rem; /* margen alrededor del contenido */
+  margin: 1rem; /* margen alrededor del contenido */
   background: var(--base-color); /* color de fondo basado en variable */
   color: var(--text-color); /* color del texto */
 }
+
+@media (max-width: 600px) {
+  body {
+    margin: 1rem;
+  }
+}
+@media (max-width: 400px) {
+  body {
+    margin: 0.5rem;
+  }
+}
+
 
 /* Margen inferior para títulos h1 */
 h1 {
@@ -108,10 +120,20 @@ header > div {
 /* Contenedor con grid para las notas */
 .notes-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* columnas responsivas */
-  gap: 1.5rem; /* espacio entre elementos */
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
   padding: 16px;
+  max-width: 100%;  /* Asegura que no se salga del contenedor */
+  justify-content: center; /* centra las columnas dentro del grid */
 }
+
+@media (max-width: 320px) {
+  .notes-grid {
+    grid-template-columns: 1fr; /* Solo una columna en móviles muy pequeños */
+    padding: 8px;
+  }
+}
+
 
 /* Estilo de cada tarjeta de nota */
 .note-card {
@@ -164,6 +186,12 @@ header > div {
   opacity: 1;
   visibility: visible;
 }
+
+main#notesContainer {
+  max-width: 1000px;
+  margin: 0 auto; /* centrado horizontal */
+}
+
 
 /* Botones de editar y borrar */
 .edit-btn, .delete-btn {
@@ -378,4 +406,8 @@ dialog::backdrop {
   overflow: hidden;              /* oculta texto sobrante */
   text-overflow: ellipsis;       /* añade puntos suspensivos */
   white-space: normal;           /* permite saltos de línea */
+}
+
+html, body {
+  overflow-x: hidden;
 }
